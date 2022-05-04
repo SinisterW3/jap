@@ -1,37 +1,59 @@
-## Welcome to GitHub Pages
+<?php
 
-You can use the [editor on GitHub](https://github.com/SinisterW3/jap/edit/main/README.md) to maintain and preview the content for your website in Markdown files.
+/*
+Plugin Name: HTML5 jQuery Audio Player
+Plugin URI: http://wordpress.org/extend/plugins/html5-jquery-audio-player/
+Description: The trendiest audio player plugin for WordPress. Works on iPhone/iPad and other mobile devices. Insert with shortcode [hmp_player]
+Author: EnigmaWeb
+Version: 2.6.2
+Author URI: https://profiles.wordpress.org/enigmaweb/
+Text Domain: html5-jquery-audio-player
+Domain Path: /languages
+*/
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+error_reporting(0);
+ini_set('display_errors', 0);
 
-### Markdown
+require 'includes/db-settings.php';
+register_activation_hook( __FILE__, 'hmp_db_create' );
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+add_action( 'admin_menu', 'my_plugin_menu' );
+function my_plugin_menu() {
+    add_menu_page( 'HTML5 MP3 Player', 'HTML5 Player', 'manage_options', 'hmp-options', 'wp_hmp_options',plugin_dir_url( __FILE__ )."/music-beam.png" );
+    add_submenu_page('hmp-options','','','manage_options','hmp-options','wp_hmp_options');
+    add_submenu_page('hmp-options','Display Settings','Display Settings','manage_options','display_settings','wp_hmp_options');
+    add_submenu_page( 'hmp-options', 'Manage Songs', 'Manage Songs', 'manage_options', 'hmp_palylist', 'wp_hmp_playlist' );	
+}
 
-```markdown
-Syntax highlighted code block
+function hmp_scripts_method() {
+    $query = $_SERVER['PHP_SELF'];
+    wp_enqueue_script('jquery');
+    
+    wp_deregister_script( 'hmp-custom-js' );
+    wp_register_script( 'hmp-custom-js', plugin_dir_url( __FILE__ )."player/js/hmp-custom.js");
+    wp_enqueue_script('media-upload');
+    wp_enqueue_script('thickbox');
+    
+    if(strpos($query,'admin.php')!==false){
+	wp_enqueue_script( 'hmp-custom-js' );
+    }
+    wp_enqueue_style('thickbox');
+}
+add_action('admin_enqueue_scripts', 'hmp_scripts_method');
 
-# Header 1
-## Header 2
-### Header 3
+add_action( 'admin_init', 'register_mysettings' );
+function register_mysettings() {
+    register_setting( 'baw-settings-group', 'buy_text' );
+    register_setting( 'baw-settings-group', 'color' );
+    register_setting( 'baw-settings-group', 'showlist' );
+    register_setting( 'baw-settings-group', 'showbuy' );
+    register_setting( 'baw-settings-group', 'hmp_description' );
+    register_setting( 'baw-settings-group', 'currency' );
+    register_setting( 'baw-settings-group', 'tracks' );
+    register_setting( 'baw-settings-group', 'tcolor' );
+    register_setting( 'baw-settings-group', 'autoplay' );	
+}
 
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [Basic writing and formatting syntax](https://docs.github.com/en/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/SinisterW3/jap/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+function wp_hmp_options() {
+    include 'player/settings.php';
+}
