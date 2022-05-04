@@ -1,237 +1,58 @@
-{
-	// --opacity: 1;
-	--color: #faa700;
-	--color-light: #f5ede1;
-	// --color-rgba: rgba(250, 167, 0, var(--opacity));
-	--dark: #a7a7a7;
-	--dark: #8a8a8a;
-	--darker: #303030;
-	--sans-serif: 'Roboto', sans-serif;
-}
-
-@mixin flex($j:initial, $a:initial, $w:initial, $c:initial) {
-	display: flex;
-	flex-wrap: $w;
-	justify-content: $j;
-	align-items: $a;
-	align-content: $c;
-}
-body {
-	font-family: var(--sans-serif);
-	background: #eeeeee;
-}
-
-
-body {
-	background: #0a1a24;
-}
-.background {
-	// position: absolute;
-	// width: 100%;
-	// top: 0;
-	// left: 0;
-	// z-index: -1;
-	width: 100%;
-  height: 56.25vw;
-  background: url(https://cdn.klove.com/images/music/artists/bios/SkilletUnleashed.KLArtist.jpg) center/cover;
-  box-shadow: inset 0px -17vw 20vw 1vw #0a1a24;
-  position: absolute;
-  top: 0;
-  z-index: -1;
-	img {
-		max-width: 100%;
-		max-height:100vh;
-	box-shadow: inset 0px -17vw 30vw 1vw #131313;
-	}
-	+ section {
-		margin-top: 60vmin;
-		// opacity: 0;
-		background: transparent;
-		--dark: rgba(white, .5);
-		--dark: rgba(white, .6);
-		--darker: rgba(white, .8);
-		.bookmark {
-			border-color: rgba(white, .2);
-			svg {
-				fill: #fff;
-			}
-		}
-		.album-tracks {
-			background: rgba(white, .1);
-			border: none;
-		}
-	}
-}
-
-
-
-section {
-	background: #fafafa;
-	margin: 100px 56px;
-	padding: 20px 56px;
-	color: var(--darker);
-	color: rgba(white, .8);
-	.album-info {
-		// Float problems solved
-		// overflow: auto;
-		// min-height: 280px;
-		// display: flex;
-		// align-items: flex-start
-		&:after { 
-		 content: " ";
-		 display: block; 
-		 height: 0; 
-		 clear: both;
-	}
-	}
-	.album-art {
-		// display: flex;
-		// justify-content: center;
-		// flex-wrap: wrap;
-		float: left;
-		width: 220px;
-		// flex: 0 0 220px;
-		margin-right: 20px;
-		margin-bottom: 20px;
-		
-		* {
-			border-radius: 3px;
-		}
-		img {
-			width: 100%;
-			margin-bottom: 10px;
-			// height: 220px;
-			margin-top:-80px;
-			box-shadow: 0 5px 60px -3px rgba(0, 0, 0, 0.18);
-		}
-	}
-	.play {
-		@include flex(center, center);
-		// display: flex;
-		// align-items: center;
-		// justify-content: center;
-		color: white;
-		background: var(--color);
-		padding: 10px;
-		text-transform: uppercase;
-		// flex: 1 1 70%;
-		flex: 1 0 50%;
-	}
-	.bookmark {
-		@include flex(center, center);
-		// display: flex;
-		// justify-content: center;
-		// align-items: center;
-		width: 48px;
-		height: 48px;
-		// background: black;
-		border: 3px solid var(--color-light);
-		margin-left: 10px;
-	}
-	.album-details {
-		> * {
-			padding: 10px 0;
-		}
-	}
-	h2 {
-		@include flex(initial, center);
-		color: var(--dark);
-		// display: flex;
-		// align-items: center;
-		font-size: 16px;
-		font-weight: 500;
-		text-transform: uppercase;
-		img {
-			width: 24px;
-			border-radius: 50%;
-			margin-right: 10px;
-		}
-	}
-	h1 {
-		font-size: 50px;
-		font-weight: 300;
-		word-wrap: break-word;
-		+ span {
-			color: var(--dark);
-			span:first-child {
-				padding-right: 20px;
-			}
-		}
-	}
-	p {
-		margin-top: 15px;
-	}
-	.album-tracks {
-		background: #f8f8f8;
-		border: 1px solid #efefef;
-		margin-top: 20px;
-	}
-	@media(max-width: 800px) {
-		margin: 100px 36px 36px 36px;
-	}
-	@media(max-width: 700px) {
-		.album-art {
-			width: 100%;
-			img {
-				width: auto;
-				max-width: 100%;
-				margin: -100px auto 10px auto;
-				display: block;
-			}
-		}
-		.album-details {
-			// display: inline-block;
-			float: left;
-			max-width: 100%;
-		}
-	}
-	@media(max-width: 550px) {
-		margin: 100px 20px 20px 20px;
-		padding: 20px 16px;
-		ol {
-			padding: 16px;
-		}
-	}
-}
-
-ol {
-  list-style-type: none;
-	padding: 20px 36px;
-	font-weight: 500;
-	li {
-		counter-increment: number;
-		@include flex(space-between, center);
-		// display: flex;
-		// justify-content: space-between;
-		// align-items: center;
-		height:45px;
-		color: var(--dark);
-		span {
-			&:not(:last-child) {
-				margin-right: 2em;
-				@media(max-width: 700px) {
-					margin-right: 1em;
-				}
-			}
-			&:first-child {
-				white-space: nowrap;
-				text-overflow: ellipsis;
-				overflow: hidden;
-				color: var(--darker);
-				&:before {
-					content: counter(number);
-					margin-right: 2em;
-					color: var(--dark);
-					display: inline-block;
-					text-align: end;
-					width: 20px;
-				}
-			}
-		}
-	}
-}
-
-.actions {
-	@include flex();
-	flex: 1 1 100%;
-}
+.background
+section
+	.album-info
+		.album-art
+			img(src='https://target.scene7.com/is/image/Target/51223401?wid=520&hei=520&fmt=pjpeg')
+			.actions
+				.play Play
+				.bookmark
+					svg(xmlns='http://www.w3.org/2000/svg', fill='#faa800', height='24', viewbox='0 0 24 24', width='24')
+						path(d='M17 3H7c-1.1 0-1.99.9-1.99 2L5 21l7-3 7 3V5c0-1.1-.9-2-2-2zm0 15l-5-2.18L7 18V5h10v13z')
+						path(d='M0 0h24v24H0z', fill='none')
+		.album-details
+			h2 
+				img(src='https://68.media.tumblr.com/avatar_edbd71e8c8ac_128.png')
+				| Skillet
+			h1 Unleashed
+			span 
+				span Hard Rock 
+				span &copy; 2016 Atlantic Recording Corporation
+			p Unleashed is the tenth album by American Christian rock band Skillet, released on August 5, 2016. The album was announced on May 20, 2016, and a lyric video was released for the track "Feel Invincible" at the same time on the band's YouTube channel. Six days later, the band released a lyric video for the track "Stars" on their YouTube channel.
+	.album-tracks
+		ol
+			li 
+				span Feel Invincible
+				span 3:49
+			li 
+				span Back From The Dead
+				span 3:33		
+			li 
+				span Stars
+				span 3:47
+			li 
+				span I Want To Live
+				span 3:28
+			li 
+				span Undefeated
+				span 3:35
+			li 
+				span Famous
+				span 3:18
+			li 
+				span Lions
+				span 3:24
+			li 
+				span Out Of Hell
+				span 3:34
+			li 
+				span Burn It Down
+				span 3:16
+			li 
+				span Watching For Comets
+				span 3:29
+			li 
+				span Saviors Of The World
+				span 3:46
+			li 
+				span The Resistance
+				span 3:52
